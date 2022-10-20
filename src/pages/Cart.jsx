@@ -1,34 +1,21 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { CartItem } from "../components/index";
-import { useSelector, useDispatch } from "react-redux";
-import { Formik, useFormik } from "formik";
+import { useSelector} from "react-redux";
+import { useFormik } from "formik";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Button from "../components/Button";
 //import {  removeCartItem, plusCartItem, minusCartItem } from '../redux/actions/cart';
 
 function Cart() {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
 
   const addedProducts = Object.keys(items).map((key) => {
     return items[key].items[0];
   });
-  /*const onRemoveItem = (_id) => {
-   
-      dispatch(removeCartItem(_id));
-    
-  };
-
-  const onPlusItem = (_id) => {
-    dispatch(plusCartItem(_id));
-  };
-
-  const onMinusItem = (_id) => {
-    dispatch(minusCartItem(_id));
-  };*/
 
   const formik = useFormik({
     initialValues: {
@@ -37,18 +24,18 @@ function Cart() {
       phone: "",
       adress: "",
       addedProducts,
+      totalPrice,
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values.totalPrice);
+      alert("Order is added," + values.name + `\nOrder price:` + " "+ values.totalPrice + " hrn");
       axios
         .post("http://localhost:4444/orders", values)
         .then((response) => console.log("👉 Returned data:", response));
+        
     },
   });
 
-  const onSubmit = () => {
-    alert("Order is added");
-  };
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -65,7 +52,7 @@ function Cart() {
      noValidate
      autoComplete="off"
     >
-          <div className="cart__someDiv">
+       <div  className="cart__top">
             <TextField
               label="Name"
               variant="filled"
@@ -105,42 +92,42 @@ function Cart() {
               value={formik.values.adress}
               onChange={formik.handleChange}
             />
-          </div>
+            </div>
+        
           </Box>
+          
           <div className="content__items">
+      
             {addedProducts.map((obj) => (
               <CartItem
                 key={obj._id}
                 name={obj.name}
                 totalPrice={items[obj._id].totalPrice}
                 totalCount={items[obj._id].items.length}
-                /*onRemove={onRemoveItem}
-            onMinus={onMinusItem}
-            onPlus={onPlusItem}*/
               />
             ))}
 
             <div className="cart__bottom">
               <div className="cart__bottom-details">
-                <span>
+               <p> <span>
                   Усього: <b>{totalCount} </b>
                 </span>
+                </p>
+                <p>
                 <span>
                   Сума замовлення: <b>{totalPrice}</b>
                 </span>
+                </p>
               </div>
               <div className="cart__bottom-buttons">
-                <a
-                  href="/"
-                  className="button button--outline button--add go-back-btn"
-                >
-                  <span>Повернутися назад</span>
-                </a>
+                <Link to="/">
+        <Button>  Повернутись назад</Button>  
+        </Link>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                  onClick={onSubmit}
+                  onClick={formik.onSubmit}
                 >
                   Замовити
                 </Button>

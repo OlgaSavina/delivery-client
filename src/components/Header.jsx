@@ -12,15 +12,21 @@ function Header() {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/"></Link>
+     
+        <Link to="/">
+        <div className="header__logo">
+          <h1>Delivery App</h1>
+          </div>
+        </Link>
+
         <div className="header__cart">
           <Link to="/cart">
             <Button className="button--cart">
-              <h3>Shopping cart </h3>
+              <span>Cart </span>
+              <div className="button__delimiter"></div>
 
               <span>{totalPrice}</span>
-              <div className="button__delimiter"></div>
-              <span>{totalCount}</span>
+              
             </Button>
           </Link>
         </div>
