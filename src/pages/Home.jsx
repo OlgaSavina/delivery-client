@@ -4,7 +4,7 @@ import { Button, ProductBlock, Shops } from "../components";
 import { addProductToCart } from "../redux/actions/cart";
 import { setShop } from "../redux/actions/shop";
 
-import { getShops } from "../api/getShops";
+//import { getShops } from "../api/getShops";
 import { getProducts } from "../api/getProducts";
 
 function Home() {
@@ -16,12 +16,12 @@ function Home() {
     dispatch(addProductToCart(product));
   };
 
-  const selectShops = React.useCallback((items) => {
+ /* const selectShops = React.useCallback((items) => {
     dispatch(setShop(items));
     console.log(items);
   }, []);
 
-  const [shops, setShops] = React.useState([]);
+  const [shops, setShops] = React.useState([]);*/
   const [products, setProducts] = React.useState([]);
 
   React.useEffect(() => {

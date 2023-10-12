@@ -15,7 +15,7 @@ function Header() {
      
         <Link to="/">
         <div className="header__logo">
-          <h1>Delivery App</h1>
+          <h1>Pasta Delivery App</h1>
           </div>
         </Link>
 
